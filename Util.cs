@@ -53,11 +53,17 @@ namespace JSBuild
     //        }
         }
 
+        public static string CleanPath(string path)
+        {
+	        // https://docs.microsoft.com/en-us/dotnet/api/system.io.path.directoryseparatorchar?view=net-5.0
+	        return path.Replace('\\', '/');
+        }
+        
 		public static string FixPath(string path)
 		{
-			if (!path.EndsWith("\\"))
+			if (!path.EndsWith(System.IO.Path.DirectorySeparatorChar))
 			{
-				path += "\\";
+				path += System.IO.Path.DirectorySeparatorChar;
 			}
 			return path;
 		}

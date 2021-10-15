@@ -180,8 +180,8 @@ namespace JSBuild
             // true when debugging in Visual Studio, otherwise leave it false.  Originally I had this
             // as a #DEBUG conditional, but we commonly release Debug builds right now, and we don't want
             // this code executing for someone who's not actively debugging the console.
-            Console.Out.WriteLine("\nPress ENTER to continue...");
-            Console.ReadLine();
+            //Console.Out.WriteLine("\nPress ENTER to continue...");
+            //Console.ReadLine();
         }
 	}
 }

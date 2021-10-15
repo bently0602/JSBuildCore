@@ -34,12 +34,16 @@ namespace JSBuild
 
 		public void Load(string applicationExePath)
         {
+            var settingsXMLPath = new FileInfo(applicationExePath).Directory.FullName +
+                                  System.IO.Path.DirectorySeparatorChar + "settings.xml";
             XmlSerializer s = new XmlSerializer(typeof(Options));
-			FileInfo fi = new FileInfo(new FileInfo(applicationExePath).Directory.FullName + "\\settings.xml");
+			FileInfo fi = new FileInfo(
+                settingsXMLPath
+            );
 
             if(fi.Exists)
             {
-				TextReader r = new StreamReader(new FileInfo(applicationExePath).Directory.FullName + "\\settings.xml");
+				TextReader r = new StreamReader(settingsXMLPath);
                 instance = (Options)s.Deserialize(r);
                 r.Close();
             }
@@ -49,8 +53,10 @@ namespace JSBuild
 
 		public void Save(string applicationExePath)
         {
+            var settingsXMLPath = new FileInfo(applicationExePath).Directory.FullName +
+                                  System.IO.Path.DirectorySeparatorChar + "settings.xml";
             XmlSerializer s = new XmlSerializer(typeof(Options));
-			TextWriter w = new StreamWriter(new FileInfo(applicationExePath).Directory.FullName + "\\settings.xml");
+			TextWriter w = new StreamWriter(settingsXMLPath);
             s.Serialize(w, instance);
             w.Close();
         }
@@ -153,25 +159,6 @@ namespace JSBuild
         {
             get {   return recentProjects; }
             set { recentProjects = value; }
-        }
-
-        public void AddRecentProject(object value)
-        {
-            if (!RecentProjects.Contains(value))
-            {
-                if (RecentProjects.Count == maxRecentProjects)
-                {
-                    //recentProjects.RemoveAt(maxRecentProjects);
-                    ArrayList tempRecentProjects = RecentProjects.GetRange(0, maxRecentProjects - 1);
-                    RecentProjects = new ArrayList();
-                    RecentProjects.AddRange(tempRecentProjects);
-                }
-            }
-            else
-            {
-                RecentProjects.Remove(value);
-            }
-            RecentProjects.Insert(0, value);
         }
     }
 }
